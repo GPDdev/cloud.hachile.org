@@ -2,6 +2,8 @@ const root = document.documentElement;
 const english = root.lang === 'en';
 const viewButtons = document.querySelectorAll('[data-view-choice]');
 const lightButton = document.querySelector('[data-light-switch]');
+const roomModule = new URL('room/engine.js', document.currentScript.src);
+let roomLoad;
 
 function remembered(key) {
   try { return localStorage.getItem('cloudsdale-' + key); } catch { return null; }
@@ -15,6 +17,9 @@ function showView(value) {
   root.dataset.view = value === 'journal' ? 'journal' : 'scene';
   for (const button of viewButtons) {
     button.setAttribute('aria-pressed', String(button.dataset.viewChoice === root.dataset.view));
+  }
+  if (root.dataset.view === 'scene' && !roomLoad) {
+    roomLoad = import(roomModule.href).catch(() => { roomLoad = null; });
   }
 }
 

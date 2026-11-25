@@ -10,10 +10,10 @@
   <link rel="alternate" hreflang="zh-CN" href="https://cloud.hachile.org/">
   <link rel="alternate" hreflang="en" href="https://cloud.hachile.org/en/">
   <link rel="icon" type="image/png" href="../assets/mark.png">
-  <meta property="og:image" content="https://cloud.hachile.org/assets/cloudsdale.webp">
-  <link rel="stylesheet" href="../style.css">
-  <script defer src="../cloud.js"></script>
-  <noscript><style>.view-switch,.scene-tools{display:none!important}.journal{display:grid!important}</style></noscript>
+  <meta property="og:image" content="https://cloud.hachile.org/assets/room-poster.webp">
+  <link rel="stylesheet" href="../style.css?v=cottage-1">
+  <script defer src="../cloud.js?v=cottage-1"></script>
+  <noscript><style>.view-switch,.room-tools{display:none!important}.journal{display:grid!important}</style></noscript>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -34,20 +34,31 @@
   </header>
   <main id="main" class="wrap">
     <section class="scene" aria-labelledby="scene-title">
-      <img class="scene-backdrop" src="../assets/cloudsdale.webp" width="2041" height="770" alt="" fetchpriority="high">
-      <div class="scene-copy">
-        <p class="location">Equestria　/　Cloudsdale</p>
-        <h1 id="scene-title">Cloudsdale</h1>
-        <p class="lede">I’m Skyblue Mornbreeze, a little blue pegasus living in Cloudsdale.</p>
-        <a class="action" href="https://pony.hachile.org/en/#about" data-open="profile">Meet Skyblue <span aria-hidden="true">↗</span></a>
+      <div class="room-stage" data-room>
+        <picture class="room-poster">
+          <source media="(max-width: 680px)" srcset="../assets/room-poster-mobile.webp">
+          <img src="../assets/room-poster.webp" alt="Skyblue’s cottage above the clouds, with an easel and a writing desk beside the arched windows." fetchpriority="high">
+        </picture>
+        <canvas data-room-canvas tabindex="0" aria-label="3D view of the Cloudsdale cottage" aria-describedby="camera-help"></canvas>
+        <a class="room-pin" href="https://pony.hachile.org/en/#about" data-open="profile" data-room-pin="profile"><i aria-hidden="true"></i>Skyblue Mornbreeze</a>
+        <a class="room-pin" href="https://gallery.hachile.org/" data-open="album" data-room-pin="album"><i aria-hidden="true"></i>Sketchbook</a>
+        <a class="room-pin" href="https://home.hachile.org/en/#discussion" data-open="mail" data-room-pin="mail"><i aria-hidden="true"></i>Mailbox</a>
       </div>
-      <a class="pony-pin" href="https://pony.hachile.org/en/#about" data-open="profile" aria-label="Meet Skyblue">
-        <img src="../assets/skyblue.webp" alt="" width="900" height="852">
-        <span class="pin-label"><i aria-hidden="true"></i>Skyblue Mornbreeze</span>
-      </a>
-      <a class="pin art-pin" href="https://gallery.hachile.org/" data-open="album"><span class="pin-label"><i aria-hidden="true"></i>Sketchbook</span></a>
-      <a class="pin mail-pin" href="https://home.hachile.org/en/#discussion" data-open="mail"><span class="pin-label"><i aria-hidden="true"></i>Mailbox</span></a>
-      <div class="scene-tools"><button class="light-switch" type="button" data-light-switch aria-pressed="false" aria-label="Switch to night"><span aria-hidden="true">☾</span> <span data-light-text>Night</span></button></div>
+      <div class="room-bar">
+        <div class="room-caption">
+          <h1 id="scene-title">Cloudsdale Cottage</h1>
+          <p class="camera-help" id="camera-help"><span class="drag-help">Drag or use the arrow keys to look around. Select an object to explore.</span><span class="touch-help">Swipe sideways to look around. Tap an object to explore.</span></p>
+          <p class="still-help">Choose Skyblue, the sketchbook, or the mailbox.</p>
+        </div>
+        <div class="room-tools">
+          <div class="room-zoom" role="group" aria-label="Camera distance">
+            <button type="button" data-room-zoom="out" aria-label="Zoom out" title="Zoom out">−</button>
+            <button type="button" data-room-zoom="in" aria-label="Zoom in" title="Zoom in">+</button>
+          </div>
+          <button class="room-reset" type="button" data-room-reset><span aria-hidden="true">⟲</span> Reset view</button>
+          <button class="light-switch" type="button" data-light-switch aria-pressed="false" aria-label="Night scene"><span aria-hidden="true">☾</span> <span data-light-text>Night</span></button>
+        </div>
+      </div>
     </section>
     <section class="journal" id="journal" aria-labelledby="journal-title">
       <div class="journal-copy"><p class="location">From the journal</p><h1 id="journal-title">Call me Skyblue</h1>

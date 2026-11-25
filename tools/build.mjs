@@ -23,11 +23,10 @@ function render(en) {
   const dream = t('在人类世界，我在同济大学学习机器人。我想有一天能造出一匹像 Sweetiebot 那样的机器小马。', 'In the human world I study robotics at Tongji University. One day I’d love to build a robot pony like Sweetiebot.');
   const album = t('小马画册', 'Sketchbook');
   const mail = t('云端信箱', 'Mailbox');
-  const profile = t('认识天蓝', 'Meet Skyblue');
   const close = t('关闭', 'Close');
   const closer = '<button class="close" type="button" data-close aria-label="' + close + '">×</button>';
   const open = (dialog, href, label, cls = '') => `<a class="${cls}" href="${href}" data-open="${dialog}">${label}</a>`;
-  const pin = (dialog, href, label, cls) => open(dialog, href, '<span class="pin-label"><i aria-hidden="true"></i>' + label + '</span>', 'pin ' + cls);
+  const pin = (dialog, href, label) => `<a class="room-pin" href="${href}" data-open="${dialog}" data-room-pin="${dialog}"><i aria-hidden="true"></i>${label}</a>`;
   const images = [
     ['cloud-portrait.webp', t('趴在云端', 'Up in the clouds'), t('天蓝晨风趴在白云上，一侧翅膀从身后探出。', 'Skyblue leans on a white cloud with one wing peeking out.')],
     ['studio.webp', t('星星眼', 'Stars in my eyes'), t('粉色背景里，天蓝晨风抬起前蹄，眼睛里闪着星星。', 'Against a pink backdrop, Skyblue raises one forehoof with a starry-eyed look.')],
@@ -52,10 +51,10 @@ function render(en) {
   <link rel="alternate" hreflang="zh-CN" href="https://cloud.hachile.org/">
   <link rel="alternate" hreflang="en" href="https://cloud.hachile.org/en/">
   <link rel="icon" type="image/png" href="${asset('mark.png')}">
-  <meta property="og:image" content="https://cloud.hachile.org/assets/cloudsdale.webp">
-  <link rel="stylesheet" href="${base}style.css">
-  <script defer src="${base}cloud.js"></script>
-  <noscript><style>.view-switch,.scene-tools{display:none!important}.journal{display:grid!important}</style></noscript>
+  <meta property="og:image" content="https://cloud.hachile.org/assets/room-poster.webp">
+  <link rel="stylesheet" href="${base}style.css?v=cottage-1">
+  <script defer src="${base}cloud.js?v=cottage-1"></script>
+  <noscript><style>.view-switch,.room-tools{display:none!important}.journal{display:grid!important}</style></noscript>
 </head>
 <body>
   <a class="skip" href="#main">${t('跳到正文', 'Skip to content')}</a>
@@ -76,20 +75,31 @@ function render(en) {
   </header>
   <main id="main" class="wrap">
     <section class="scene" aria-labelledby="scene-title">
-      <img class="scene-backdrop" src="${asset('cloudsdale.webp')}" width="2041" height="770" alt="" fetchpriority="high">
-      <div class="scene-copy">
-        <p class="location">${t('小马国　/　云中城', 'Equestria　/　Cloudsdale')}</p>
-        <h1 id="scene-title">Cloudsdale</h1>
-        <p class="lede">${welcome}</p>
-        ${open('profile', pony + '#about', profile + ' <span aria-hidden="true">↗</span>', 'action')}
+      <div class="room-stage" data-room>
+        <picture class="room-poster">
+          <source media="(max-width: 680px)" srcset="${asset('room-poster-mobile.webp')}">
+          <img src="${asset('room-poster.webp')}" alt="${t('天蓝晨风的云中城小屋，拱窗外是云海，窗边摆着画架和书桌。','Skyblue’s cottage above the clouds, with an easel and a writing desk beside the arched windows.')}" fetchpriority="high">
+        </picture>
+        <canvas data-room-canvas tabindex="0" aria-label="${t('云中城小屋三维视图','3D view of the Cloudsdale cottage')}" aria-describedby="camera-help"></canvas>
+        ${pin('profile', pony + '#about', name)}
+        ${pin('album', gallery, album)}
+        ${pin('mail', home + '#discussion', mail)}
       </div>
-      <a class="pony-pin" href="${pony}#about" data-open="profile" aria-label="${profile}">
-        <img src="${asset('skyblue.webp')}" alt="" width="900" height="852">
-        <span class="pin-label"><i aria-hidden="true"></i>${name}</span>
-      </a>
-      ${pin('album', gallery, album, 'art-pin')}
-      ${pin('mail', home + '#discussion', mail, 'mail-pin')}
-      <div class="scene-tools"><button class="light-switch" type="button" data-light-switch aria-pressed="false" aria-label="${t('开启夜景','Switch to night')}"><span aria-hidden="true">☾</span> <span data-light-text>${t('夜景','Night')}</span></button></div>
+      <div class="room-bar">
+        <div class="room-caption">
+          <h1 id="scene-title">${t('云中城小屋','Cloudsdale Cottage')}</h1>
+          <p class="camera-help" id="camera-help"><span class="drag-help">${t('拖动或用方向键环顾，点击屋内物件。','Drag or use the arrow keys to look around. Select an object to explore.')}</span><span class="touch-help">${t('左右滑动环顾，轻点屋内物件。','Swipe sideways to look around. Tap an object to explore.')}</span></p>
+          <p class="still-help">${t('点选天蓝、画册或信箱。','Choose Skyblue, the sketchbook, or the mailbox.')}</p>
+        </div>
+        <div class="room-tools">
+          <div class="room-zoom" role="group" aria-label="${t('镜头距离','Camera distance')}">
+            <button type="button" data-room-zoom="out" aria-label="${t('拉远镜头','Zoom out')}" title="${t('拉远镜头','Zoom out')}">−</button>
+            <button type="button" data-room-zoom="in" aria-label="${t('拉近镜头','Zoom in')}" title="${t('拉近镜头','Zoom in')}">+</button>
+          </div>
+          <button class="room-reset" type="button" data-room-reset><span aria-hidden="true">⟲</span> ${t('视角归位','Reset view')}</button>
+          <button class="light-switch" type="button" data-light-switch aria-pressed="false" aria-label="${t('夜景模式','Night scene')}"><span aria-hidden="true">☾</span> <span data-light-text>${t('夜景','Night')}</span></button>
+        </div>
+      </div>
     </section>
     <section class="journal" id="journal" aria-labelledby="journal-title">
       <div class="journal-copy"><p class="location">${t('云中城手记','From the journal')}</p><h1 id="journal-title">${t('叫我天蓝就好','Call me Skyblue')}</h1>

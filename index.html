@@ -10,10 +10,10 @@
   <link rel="alternate" hreflang="zh-CN" href="https://cloud.hachile.org/">
   <link rel="alternate" hreflang="en" href="https://cloud.hachile.org/en/">
   <link rel="icon" type="image/png" href="./assets/mark.png">
-  <meta property="og:image" content="https://cloud.hachile.org/assets/cloudsdale.webp">
-  <link rel="stylesheet" href="./style.css">
-  <script defer src="./cloud.js"></script>
-  <noscript><style>.view-switch,.scene-tools{display:none!important}.journal{display:grid!important}</style></noscript>
+  <meta property="og:image" content="https://cloud.hachile.org/assets/room-poster.webp">
+  <link rel="stylesheet" href="./style.css?v=cottage-1">
+  <script defer src="./cloud.js?v=cottage-1"></script>
+  <noscript><style>.view-switch,.room-tools{display:none!important}.journal{display:grid!important}</style></noscript>
 </head>
 <body>
   <a class="skip" href="#main">跳到正文</a>
@@ -34,20 +34,31 @@
   </header>
   <main id="main" class="wrap">
     <section class="scene" aria-labelledby="scene-title">
-      <img class="scene-backdrop" src="./assets/cloudsdale.webp" width="2041" height="770" alt="" fetchpriority="high">
-      <div class="scene-copy">
-        <p class="location">小马国　/　云中城</p>
-        <h1 id="scene-title">Cloudsdale</h1>
-        <p class="lede">我是天蓝晨风，一只住在云中城的蓝色小天马。</p>
-        <a class="action" href="https://pony.hachile.org/#about" data-open="profile">认识天蓝 <span aria-hidden="true">↗</span></a>
+      <div class="room-stage" data-room>
+        <picture class="room-poster">
+          <source media="(max-width: 680px)" srcset="./assets/room-poster-mobile.webp">
+          <img src="./assets/room-poster.webp" alt="天蓝晨风的云中城小屋，拱窗外是云海，窗边摆着画架和书桌。" fetchpriority="high">
+        </picture>
+        <canvas data-room-canvas tabindex="0" aria-label="云中城小屋三维视图" aria-describedby="camera-help"></canvas>
+        <a class="room-pin" href="https://pony.hachile.org/#about" data-open="profile" data-room-pin="profile"><i aria-hidden="true"></i>天蓝晨风</a>
+        <a class="room-pin" href="https://gallery.hachile.org/" data-open="album" data-room-pin="album"><i aria-hidden="true"></i>小马画册</a>
+        <a class="room-pin" href="https://home.hachile.org/#discussion" data-open="mail" data-room-pin="mail"><i aria-hidden="true"></i>云端信箱</a>
       </div>
-      <a class="pony-pin" href="https://pony.hachile.org/#about" data-open="profile" aria-label="认识天蓝">
-        <img src="./assets/skyblue.webp" alt="" width="900" height="852">
-        <span class="pin-label"><i aria-hidden="true"></i>天蓝晨风</span>
-      </a>
-      <a class="pin art-pin" href="https://gallery.hachile.org/" data-open="album"><span class="pin-label"><i aria-hidden="true"></i>小马画册</span></a>
-      <a class="pin mail-pin" href="https://home.hachile.org/#discussion" data-open="mail"><span class="pin-label"><i aria-hidden="true"></i>云端信箱</span></a>
-      <div class="scene-tools"><button class="light-switch" type="button" data-light-switch aria-pressed="false" aria-label="开启夜景"><span aria-hidden="true">☾</span> <span data-light-text>夜景</span></button></div>
+      <div class="room-bar">
+        <div class="room-caption">
+          <h1 id="scene-title">云中城小屋</h1>
+          <p class="camera-help" id="camera-help"><span class="drag-help">拖动或用方向键环顾，点击屋内物件。</span><span class="touch-help">左右滑动环顾，轻点屋内物件。</span></p>
+          <p class="still-help">点选天蓝、画册或信箱。</p>
+        </div>
+        <div class="room-tools">
+          <div class="room-zoom" role="group" aria-label="镜头距离">
+            <button type="button" data-room-zoom="out" aria-label="拉远镜头" title="拉远镜头">−</button>
+            <button type="button" data-room-zoom="in" aria-label="拉近镜头" title="拉近镜头">+</button>
+          </div>
+          <button class="room-reset" type="button" data-room-reset><span aria-hidden="true">⟲</span> 视角归位</button>
+          <button class="light-switch" type="button" data-light-switch aria-pressed="false" aria-label="夜景模式"><span aria-hidden="true">☾</span> <span data-light-text>夜景</span></button>
+        </div>
+      </div>
     </section>
     <section class="journal" id="journal" aria-labelledby="journal-title">
       <div class="journal-copy"><p class="location">云中城手记</p><h1 id="journal-title">叫我天蓝就好</h1>
